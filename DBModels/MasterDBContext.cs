@@ -20,7 +20,6 @@ namespace DBModels
         public virtual DbSet<Local> Locals { get; set; }
         public virtual DbSet<Person> People { get; set; }
         public virtual DbSet<Position> Positions { get; set; }
-        public virtual DbSet<Provider> Providers { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Worktime> Worktimes { get; set; }
@@ -55,53 +54,27 @@ namespace DBModels
             {
                 entity.ToTable("Person");
 
-                entity.Property(e => e.PersonId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("person_id");
+                entity.Property(e => e.PersonId).HasColumnName("person_id");
 
-                entity.Property(e => e.DateBirth).HasColumnName("date_birth");
+                entity.Property(e => e.DateBirth)
+                    .HasColumnType("date")
+                    .HasColumnName("date_birth");
 
                 entity.Property(e => e.Email)
-                    .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("email");
 
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("first_name");
-
                 entity.Property(e => e.FullName)
-                    .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("full_name");
-
-                entity.Property(e => e.LastName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("last_name");
-
-                entity.Property(e => e.Male)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("male");
-
-                entity.Property(e => e.MiddleName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("middle_name");
-
-                entity.Property(e => e.PasportNum).HasColumnName("pasport_num");
 
                 entity.Property(e => e.Phone).HasColumnName("phone");
 
                 entity.Property(e => e.RegionId)
-                    .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("region_id");
 
                 entity.Property(e => e.SocNum)
-                    .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("soc_num");
 
@@ -112,26 +85,12 @@ namespace DBModels
             {
                 entity.ToTable("Position");
 
-                entity.Property(e => e.PositionId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("position_id");
+                entity.Property(e => e.PositionId).HasColumnName("position_id");
 
                 entity.Property(e => e.PositionName)
                     .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("position_name")
-                    .IsFixedLength(true);
-            });
-
-            modelBuilder.Entity<Provider>(entity =>
-            {
-                entity.ToTable("Provider");
-
-                entity.Property(e => e.ProviderId).HasColumnName("provider_id");
-
-                entity.Property(e => e.ProviderName)
-                    .HasMaxLength(50)
-                    .HasColumnName("provider_name")
                     .IsFixedLength(true);
             });
 
@@ -162,11 +121,11 @@ namespace DBModels
             {
                 entity.ToTable("Worktime");
 
-                entity.Property(e => e.WorktimeId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("worktime_id");
+                entity.Property(e => e.WorktimeId).HasColumnName("worktime_id");
 
-                entity.Property(e => e.Date).HasColumnName("date");
+                entity.Property(e => e.Date)
+                    .HasColumnType("date")
+                    .HasColumnName("date");
 
                 entity.Property(e => e.Hours).HasColumnName("hours");
 

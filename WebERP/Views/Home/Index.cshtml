@@ -1,8 +1,12 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model DBModels.User
+@{
+    ViewData["Title"] = "Профиль";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="jumbotron">
+    <h1 class="display-4">ERP System</h1>
+    <p class="lead">Вы авторизованы в системе</p>
+    <hr class="my-4">
+    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout"><button class="btn btn-success">@ViewData["Message_btn"]</button></a>
 </div>

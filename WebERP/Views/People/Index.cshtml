@@ -1,0 +1,118 @@
+﻿@model PaginatedList<DBModels.Person>
+
+@{
+    ViewData["Title"] = "Сотрудники";
+}
+
+<ul class="nav nav-tabs m-3">
+    <li class="nav-item">
+        <a class="nav-link" asp-action="Create">Добавить</a>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle active" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Сортировать</a>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" asp-action="Index" asp-route-sortOrder="@ViewData["IdSortParm"]">По ID</a>
+            <a class="dropdown-item" asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">По ФИО</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Separated link</a>
+        </div>
+    </li>
+    @*<li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li>*@
+</ul>
+<form asp-action="Index" method="get">
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Введите имя сотрудника" aria-label="Recipient's username with two button addons" aria-describedby="button-addon4" name="SearchString" value="@ViewData["CurrentFilter"]" />
+        <div class="input-group-append" id="button-addon4">
+            <button class="btn btn-outline-secondary" type="submit">Поиск</button>
+            @*<button class="btn btn-outline-secondary"><a asp-action="Index" style="text-decoration: none;">Весь список</a></button>*@
+            <a class="btn btn-outline-secondary" asp-action="Index" style="text-decoration: none;">Весь список</a>
+        </div>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.FullName)*@ФИО
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.DateBirth)*@Дата рождения
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Phone)*@Телефон
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Email)*@Email
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.RegionId)*@Регион
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PersonId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateBirth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegionId)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.PersonId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.PersonId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.PersonId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        <li class="page-item @prevDisabled">
+            <a asp-action="Index"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@(Model.PageIndex - 1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="page-link">
+                Предыдущая
+            </a>
+        </li>
+        <li class="page-item"><a class="page-link">@ViewData["PageNumber"]</a></li>
+        <li class="page-item @nextDisabled">
+            <a asp-action="Index"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@(Model.PageIndex + 1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="page-link">
+                Следующая
+            </a>
+        </li>
+    </ul>
+</nav>
