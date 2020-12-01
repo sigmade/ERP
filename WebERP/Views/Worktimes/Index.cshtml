@@ -1,59 +1,87 @@
-﻿@model IEnumerable<DBModels.Worktime>
+﻿@model PaginatedList<DBModels.Worktime>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<ul class="nav nav-tabs m-3">
+    <li class="nav-item">
+        <a class="nav-link" asp-action="Create">Добавить</a>
+    </li>
+</ul>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Date)
+                @*@Html.DisplayNameFor(model => model.Date)*@ Дата
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Hours)
+                @*@Html.DisplayNameFor(model => model.Hours)*@ Часы
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Local)
+                @*@Html.DisplayNameFor(model => model.Local)*@ Объект
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Person)
+                @*@Html.DisplayNameFor(model => model.Person)*@ Сотрудник
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Position)
+                @*@Html.DisplayNameFor(model => model.Position)*@ Позиция
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Hours)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Local.LocalName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Person.PersonId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Position.PositionName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.WorktimeId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.WorktimeId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.WorktimeId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Hours)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Local.LocalName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Person.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Position.PositionName)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.WorktimeId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.WorktimeId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.WorktimeId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        <li class="page-item @prevDisabled">
+            <a asp-action="Index"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@(Model.PageIndex - 1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="page-link">
+                Предыдущая
+            </a>
+        </li>
+        <li class="page-item"><a class="page-link">@ViewData["PageNumber"]</a></li>
+        <li class="page-item @nextDisabled">
+            <a asp-action="Index"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@(Model.PageIndex + 1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="page-link">
+                Следующая
+            </a>
+        </li>
+    </ul>
+</nav>

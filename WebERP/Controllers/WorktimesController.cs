@@ -19,10 +19,13 @@ namespace WebERP.Controllers
         }
 
         // GET: Worktimes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber)
         {
-            var masterDBContext = _context.Worktimes.Include(w => w.Local).Include(w => w.Person).Include(w => w.Position);
-            return View(await masterDBContext.ToListAsync());
+          
+            ViewData["PageNumber"] = pageNumber;
+            var worktimes = _context.Worktimes.Include(w => w.Local).Include(w => w.Person).Include(w => w.Position);
+            int pageSize = 20;
+            return View(await PaginatedList<Worktime>.CreateAsync(worktimes.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Worktimes/Details/5
