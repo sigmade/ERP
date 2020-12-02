@@ -79,6 +79,27 @@ namespace WebERP.Controllers
 
             return View(person);
         }
+        // GET: People/Summary/5
+        public async Task<IActionResult> Summary(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var person = await _context.People
+                .Include(w => w.Worktimes)
+                    .ThenInclude(l => l.Local)
+                .Include(p => p.Worktimes)
+                    .ThenInclude(l => l.Position)
+                .FirstOrDefaultAsync(m => m.PersonId == id);
+            if (person == null)
+            {
+                return NotFound();
+            }
+
+            return View(person);
+        }
 
         // GET: People/Create
         public IActionResult Create()

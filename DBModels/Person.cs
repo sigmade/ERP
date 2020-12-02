@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.ComponentModel.DataAnnotations;
 
 namespace DBModels
 {
@@ -10,6 +10,8 @@ namespace DBModels
 
         public int PersonId { get; set; }
         public string FullName { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? DateBirth { get; set; }
         public double? TaxNum { get; set; }
         public string SocNum { get; set; }
