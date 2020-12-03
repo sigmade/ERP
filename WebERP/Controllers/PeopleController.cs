@@ -97,6 +97,10 @@ namespace WebERP.Controllers
             {
                 return NotFound();
             }
+            var summ = _context.Worktimes.Where(p => p.PersonId == id)
+                .Sum(w => w.Hours);
+              
+            ViewData["SummHourse"] = summ;
 
             return View(person);
         }
