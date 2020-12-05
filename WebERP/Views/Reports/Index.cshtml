@@ -1,0 +1,37 @@
+﻿@model DBModels.Person
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+@{
+    var month = (from hours in Model.Worktimes
+                 group hours.Hours by new { hours.Date.Month } into g
+                 select new
+                 {
+                     Months = g.Key.Month,
+                     SummHourse = g.Sum()
+                 }).ToList();
+}
+
+<h5>Выработка за месяц по всем сотрудникам</h5>
+<dl class="row">
+
+    @foreach (var item in month)
+    {
+        <dt class="col-sm-2">
+            @Html.DisplayFor(modelItem => item.Months)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(modelItem => item.SummHourse)
+        </dd>
+
+    }
+    <dt class="col-sm-2">
+        Всего отработанных часов
+    </dt>
+    <dd class="col-sm-10">
+       @ViewData["SummHourse"]
+    </dd>
+</dl>

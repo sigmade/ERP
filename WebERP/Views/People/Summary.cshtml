@@ -22,7 +22,7 @@
         </dt>
         <dd class="col-sm-10">
             <a asp-action="Details" asp-route-id="@Model.PersonId">@Html.DisplayFor(model => model.FullName)</a>
-        </dd>        
+        </dd>
     </dl>
 </div>
 
@@ -56,6 +56,7 @@
     <dd class="col-sm-10">
         @ViewData["SummHourse"]
     </dd>
+    <button onclick="javascript:window.print()" class="btn btn-primary m-2  d-print-none">Распечатать</button>
 </dl>
     <table class="table">
         <tbody>
@@ -79,7 +80,7 @@
         </tbody>
     </table>
 
-    <div>
+    <div class="d-print-none">
         <a asp-action="Edit" asp-route-id="@Model.PersonId">Edit</a> |
         <a asp-action="Index">Back to List</a>
     </div>

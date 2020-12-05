@@ -54,7 +54,7 @@ namespace WebERP.Controllers
         public IActionResult Create()
         {
             ViewData["LocalId"] = new SelectList(_context.Locals, "LocalId", "LocalName");
-            ViewData["PersonId"] = new SelectList(_context.People, "PersonId", "PersonName");
+            ViewData["PersonId"] = new SelectList(_context.People, "PersonId", "PersonId");
             ViewData["PositionId"] = new SelectList(_context.Positions, "PositionId", "PositionName");
             return View();
         }
