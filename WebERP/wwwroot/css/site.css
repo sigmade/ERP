@@ -70,12 +70,3 @@ body {
   line-height: 60px; /* Vertically center the text there */
 }
 
-@media print {
-    body {
-        visibility: hidden;
-    }
-
-    .print {
-        visibility: visible;
-    }
-}

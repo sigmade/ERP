@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DBModels;
+using OfficeOpenXml;
+using WebERP.Models;
+using System.IO;
 
 namespace WebERP.Controllers
 {
@@ -17,6 +20,8 @@ namespace WebERP.Controllers
         {
             _context = context;
         }
+
+        ExportPeople exportPeople = new ExportPeople();
 
         // GET: People
         public async Task<IActionResult> Index(string sortOrder, string searchString, int? pageNumber, string currentFilter)
@@ -60,6 +65,20 @@ namespace WebERP.Controllers
             }
             int pageSize = 20;
             return View(await PaginatedList<Person>.CreateAsync(people.AsNoTracking(), pageNumber ?? 1, pageSize));
+        }
+
+        public IActionResult ExportExcel()
+        {
+            var position = exportPeople.Getrecord();
+            var stream = new MemoryStream();
+            var package = new ExcelPackage(stream);
+            var worksheet = package.Workbook.Worksheets.Add("Sheet1");
+            worksheet.Cells.LoadFromDataTable(position.Tables[0], true);
+            package.Save();
+            stream.Position = 0;
+            string excelname = $"People-{DateTime.Now.ToString("yy-MM-dd-HH:mm")}.xlsx";
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname);
+
         }
 
         // GET: People/Details/5
