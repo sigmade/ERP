@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace WebERP.Models
 {
-    public class ExportPeople
+    public class ExcelExport
     {
         SqlConnection connect;
-        public ExportPeople()
+        public ExcelExport()
         {
             var configuration = GetConfiguration();
             connect = new SqlConnection(configuration.GetSection("ConnectionStrings").GetSection("DefaultConnection").Value);
@@ -23,10 +23,20 @@ namespace WebERP.Models
             return builder.Build();
         }
 
-        public DataSet Getrecord()
+        public DataSet GetSP(string sqlstring)
         {
-            SqlCommand command = new SqlCommand("Sp_Person", connect);
+            SqlCommand command = new SqlCommand(sqlstring, connect);
             command.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+            DataSet dataSet = new DataSet();
+            dataAdapter.Fill(dataSet);
+            return dataSet;
+        }
+
+        public DataSet Getquery(string sqlstring)
+        {
+            SqlCommand command = new SqlCommand(sqlstring, connect);
+            command.CommandType = CommandType.Text;
             SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
             DataSet dataSet = new DataSet();
             dataAdapter.Fill(dataSet);

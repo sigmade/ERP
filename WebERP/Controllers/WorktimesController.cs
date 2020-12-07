@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DBModels;
+using OfficeOpenXml;
+using WebERP.Models;
+using System.IO;
+using System.Data;
 
 namespace WebERP.Controllers
 {
@@ -18,6 +22,8 @@ namespace WebERP.Controllers
             _context = context;
         }
 
+        ExcelExport exportWorktime = new ExcelExport();
+
         // GET: Worktimes
         public async Task<IActionResult> Index(int? pageNumber)
         {
@@ -26,6 +32,21 @@ namespace WebERP.Controllers
             var worktimes = _context.Worktimes.Include(w => w.Local).Include(w => w.Person).Include(w => w.Position);
             int pageSize = 20;
             return View(await PaginatedList<Worktime>.CreateAsync(worktimes.AsNoTracking(), pageNumber ?? 1, pageSize));
+        }
+
+        public IActionResult Export()
+        {
+
+            var position = exportWorktime.Getquery("SELECT * FROM Worktime");
+            var stream = new MemoryStream();
+            var package = new ExcelPackage(stream);
+            var worksheet = package.Workbook.Worksheets.Add("Sheet1");
+            worksheet.Cells.LoadFromDataTable(position.Tables[0], true);
+            package.Save();
+            stream.Position = 0;
+            string excelname = $"ExportWorktime-{DateTime.Now.ToString("yy-MM-dd-HH:mm")}.xlsx";
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname);
+
         }
 
         // GET: Worktimes/Details/5

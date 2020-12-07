@@ -9,6 +9,7 @@ using DBModels;
 using OfficeOpenXml;
 using WebERP.Models;
 using System.IO;
+using System.Data;
 
 namespace WebERP.Controllers
 {
@@ -21,7 +22,7 @@ namespace WebERP.Controllers
             _context = context;
         }
 
-        ExportPeople exportPeople = new ExportPeople();
+        ExcelExport exportPeople = new ExcelExport();
 
         // GET: People
         public async Task<IActionResult> Index(string sortOrder, string searchString, int? pageNumber, string currentFilter)
@@ -67,12 +68,13 @@ namespace WebERP.Controllers
             return View(await PaginatedList<Person>.CreateAsync(people.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
-        public IActionResult ExportExcel()
+        public IActionResult Export()
         {
-            var position = exportPeople.Getrecord();
+            var position = exportPeople.Getquery("SELECT TOP(300) * FROM Person");
             var stream = new MemoryStream();
             var package = new ExcelPackage(stream);
             var worksheet = package.Workbook.Worksheets.Add("Sheet1");
+            worksheet.Cells["K5"].Value = "Список сотрудников";
             worksheet.Cells.LoadFromDataTable(position.Tables[0], true);
             package.Save();
             stream.Position = 0;
@@ -80,6 +82,8 @@ namespace WebERP.Controllers
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname);
 
         }
+
+       
 
         // GET: People/Details/5
         public async Task<IActionResult> Details(int? id)
