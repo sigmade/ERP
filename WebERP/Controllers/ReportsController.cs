@@ -18,26 +18,14 @@ namespace WebERP.Controllers
         }
         public IActionResult Index()
         {
-            var person = _context.People
-                .Include(w => w.Worktimes)
-                    .ThenInclude(l => l.Local)
-                .Include(p => p.Worktimes)
-                    .ThenInclude(l => l.Position)
-                 .First();
+            var month = _context.Worktimes;
             var summ = _context.Worktimes
                 .Sum(w => w.Hours);
-
-            //var month = (from hours in _context.Worktimes
-            //             group hours.Hours by new { hours.Date.Month } into g
-            //             select new
-            //             {
-            //                 Months = g.Key.Month,
-            //                 SummHourse = g.Sum()
-            //             });
-
             ViewData["SummHourse"] = summ;
+            return View(month);
 
-            return View(person);
         }
+
+
     }
 }
