@@ -18,7 +18,7 @@ namespace WebERP.Controllers
         }
         public IActionResult Index()
         {
-            var month = _context.Worktimes;
+            var month = _context.Worktimes.Include(w => w.Local);
             var summ = _context.Worktimes
                 .Sum(w => w.Hours);
             ViewData["SummHourse"] = summ;
