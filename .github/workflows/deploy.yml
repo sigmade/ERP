@@ -30,7 +30,8 @@ jobs:
     - name: Run SSH command
       uses: garygrossgarten/github-action-ssh@v0.6.3
       with:
-        command: cd /var/www/erp; ls -l
+        command: sudo systemctl restart dotnetapp.service; cd /var/www/erp; ls -l
         host: ${{ secrets.HOST }}
         username: ${{ secrets.SSH_USER }}
         password: ${{ secrets.PASSWORD }}
+ 
