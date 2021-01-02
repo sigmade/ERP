@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBModels", "DBModels\DBMode
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebERP", "WebERP\WebERP.csproj", "{255D055A-1971-4779-8C04-CDC99E8ADD46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERPConsole", "ERPConsole\ERPConsole.csproj", "{761CDF25-AE73-499C-8B87-B715FA53FD8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ERPConsole", "ERPConsole\ERPConsole.csproj", "{761CDF25-AE73-499C-8B87-B715FA53FD8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERPTest", "ERPTest\ERPTest.csproj", "{9F1C56D5-4383-45F2-B437-E879B1D59527}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{761CDF25-AE73-499C-8B87-B715FA53FD8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{761CDF25-AE73-499C-8B87-B715FA53FD8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{761CDF25-AE73-499C-8B87-B715FA53FD8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F1C56D5-4383-45F2-B437-E879B1D59527}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F1C56D5-4383-45F2-B437-E879B1D59527}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F1C56D5-4383-45F2-B437-E879B1D59527}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F1C56D5-4383-45F2-B437-E879B1D59527}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

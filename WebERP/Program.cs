@@ -18,9 +18,14 @@ namespace WebERP
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration(config =>
+                {
+                    config.AddJsonFile("appsetings.json", optional: true);
+                    config.AddJsonFile("dbconnect.json", optional: true);
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                   webBuilder.UseStartup<Startup>();
                 });
     }
 }
