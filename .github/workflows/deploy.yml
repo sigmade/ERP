@@ -26,4 +26,4 @@ jobs:
         remote: /var/www/ERP/
         host: ${{ secrets.HOST }}
         username: ${{ secrets.SSH_USER }}
-        privateKey:: ${{ secrets.SSH_KEY }}
+        password: ${{ secrets.PASSWORD }}
