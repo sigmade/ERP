@@ -27,3 +27,10 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.SSH_USER }}
         password: ${{ secrets.PASSWORD }}
+    - name: Run SSH command
+      uses: garygrossgarten/github-action-ssh@v0.6.3
+      with:
+        command: cd /var/www/ERP; ls -l
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.SSH_USER }}
+        password: ${{ secrets.PASSWORD }}
