@@ -22,15 +22,15 @@ jobs:
     - name: Copy single file to remote
       uses: garygrossgarten/github-action-scp@v0.7.1
       with:
-        local: /home/runner/work/ERP/ERP/WebERP/bin/Release/netcoreapp3.1/
-        remote: /var/www/ERP/
+        local: /home/runner/work/ERP/ERP/deploy/
+        remote: /var/www/erp/
         host: ${{ secrets.HOST }}
         username: ${{ secrets.SSH_USER }}
         password: ${{ secrets.PASSWORD }}
     - name: Run SSH command
       uses: garygrossgarten/github-action-ssh@v0.6.3
       with:
-        command: cd /var/www/ERP; ls -l
+        command: cd /var/www/erp; ls -l
         host: ${{ secrets.HOST }}
         username: ${{ secrets.SSH_USER }}
         password: ${{ secrets.PASSWORD }}
