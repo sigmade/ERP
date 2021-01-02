@@ -16,13 +16,13 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '5.0'
+        dotnet-version: '3.1'
     - name: Dotnet Publish
       run: dotnet publish -c Release -o deploy
     - name: Copy single file to remote
       uses: garygrossgarten/github-action-scp@v0.7.1
       with:
-        local: /home/runner/work/ERP/ERP/deploy/
+        local: /home/runner/work/ERP/ERP/WebERP/bin/Release/netcoreapp3.1/
         remote: /var/www/ERP/
         host: ${{ secrets.HOST }}
         username: ${{ secrets.SSH_USER }}
