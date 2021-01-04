@@ -164,6 +164,8 @@ namespace DBModels
 
                 entity.Property(e => e.PersonId);
 
+                entity.Property(e => e.DateJoined);
+
                 entity.HasOne(d => d.Person)
                     .WithMany(p => p.Files)
                     .HasForeignKey(d => d.PersonId)
