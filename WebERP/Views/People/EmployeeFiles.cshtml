@@ -1,0 +1,14 @@
+﻿<h3>Документы сотрудника</h3>
+<h6><a asp-action="Details" asp-route-id="@ViewData["PersonId"]">@ViewData["Person"]</a></h6>
+
+
+@foreach (var f in Model)
+{
+
+    <a href="@Url.Content(f.Path)">@Url.Content(f.Name)</a>
+    <br />
+
+
+}
+
+<a asp-controller="Files" asp-action="Create" asp-route-id="@ViewData["PersonId"]">Добавить новый документ</a>

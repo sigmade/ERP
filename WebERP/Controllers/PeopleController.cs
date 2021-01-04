@@ -10,12 +10,14 @@ using OfficeOpenXml;
 using WebERP.Models;
 using System.IO;
 using System.Data;
+using Microsoft.Extensions.Hosting.Internal;
 
 namespace WebERP.Controllers
 {
     public class PeopleController : Controller
     {
         private readonly MasterDBContext _context;
+        private readonly HostingEnvironment _hostingEnvironment;
 
         public PeopleController(MasterDBContext context)
         {
@@ -128,6 +130,23 @@ namespace WebERP.Controllers
             return View(person);
         }
 
+        public IActionResult EmployeeFiles(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+
+            var filesList = _context.Files.Where(p => p.PersonId == id);
+            var fullname = _context.People.Where(p => p.PersonId == id)
+                .FirstOrDefault(m => m.PersonId == id);
+            ViewData["PersonId"] = id;
+            ViewData["Person"] = fullname.FullName;
+
+            return View(filesList);
+        }
+
         // GET: People/Create
         public IActionResult Create()
         {
@@ -147,6 +166,7 @@ namespace WebERP.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(person);
         }
 
