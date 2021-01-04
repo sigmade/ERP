@@ -1,0 +1,52 @@
+﻿<h3>Документы сотрудника</h3>
+<h6><a asp-action="Details" asp-route-id="@ViewData["PersonId"]">@ViewData["Person"]</a></h6>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Наименование
+            </th>
+            <th>
+                Дата загрузки
+            </th>
+            <th>
+                Действие
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var u in Model)
+        {
+            <tr>
+                <td>
+                    @u.Id
+                </td>
+                <td>
+                    @u.Name
+                </td>
+                <td>
+                    @u.DateJoined
+                </td>
+                <td>
+                    <a href="@u.Path" target="_blank">Загрузить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+        @*@foreach (var f in Model)
+            {
+
+                <a href="@Url.Content(f.Path)" target="_blank">@Url.Content(f.Name)</a>
+                <br />
+
+
+            }*@
+
+        <a asp-action="AddFile" asp-route-id="@ViewData["PersonId"]">Добавить новый документ</a>

@@ -23,6 +23,7 @@ namespace DBModels
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Worktime> Worktimes { get; set; }
+        public virtual DbSet<File> Files { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -151,6 +152,25 @@ namespace DBModels
                     .HasForeignKey(d => d.PositionId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Worktime_Position");
+            });
+
+            modelBuilder.Entity<File>(entity =>
+            {
+                entity.ToTable("File");
+
+                entity.Property(e => e.Id);
+                entity.Property(e => e.Name);
+                entity.Property(e => e.Path);
+
+                entity.Property(e => e.PersonId);
+
+                entity.Property(e => e.DateJoined);
+
+                entity.HasOne(d => d.Person)
+                    .WithMany(p => p.Files)
+                    .HasForeignKey(d => d.PersonId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("entity.Property(e => e.Name);");
             });
 
             OnModelCreatingPartial(modelBuilder);

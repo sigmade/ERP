@@ -4,46 +4,22 @@ using DBModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DBModels.Migrations
 {
     [DbContext(typeof(MasterDBContext))]
-    partial class MasterDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210103225515_Image")]
+    partial class Image
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.1");
-
-            modelBuilder.Entity("DBModels.File", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<DateTime>("DateJoined")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Path")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PersonId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PersonId");
-
-                    b.ToTable("File");
-                });
+                .HasAnnotation("ProductVersion", "5.0.0");
 
             modelBuilder.Entity("DBModels.Local", b =>
                 {
@@ -208,17 +184,6 @@ namespace DBModels.Migrations
                     b.ToTable("Worktime");
                 });
 
-            modelBuilder.Entity("DBModels.File", b =>
-                {
-                    b.HasOne("DBModels.Person", "Person")
-                        .WithMany("Files")
-                        .HasForeignKey("PersonId")
-                        .HasConstraintName("entity.Property(e => e.Name);")
-                        .IsRequired();
-
-                    b.Navigation("Person");
-                });
-
             modelBuilder.Entity("DBModels.User", b =>
                 {
                     b.HasOne("DBModels.Role", "Role")
@@ -263,8 +228,6 @@ namespace DBModels.Migrations
 
             modelBuilder.Entity("DBModels.Person", b =>
                 {
-                    b.Navigation("Files");
-
                     b.Navigation("Worktimes");
                 });
 

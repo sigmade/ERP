@@ -10,16 +10,23 @@ using OfficeOpenXml;
 using WebERP.Models;
 using System.IO;
 using System.Data;
+using Microsoft.Extensions.Hosting.Internal;
+using Microsoft.AspNetCore.Http;
+using File = DBModels.File;
+using Microsoft.AspNetCore.Hosting;
 
 namespace WebERP.Controllers
 {
     public class PeopleController : Controller
     {
         private readonly MasterDBContext _context;
+        private readonly HostingEnvironment _hostingEnvironment;
+        IWebHostEnvironment _appEnvironment;
 
-        public PeopleController(MasterDBContext context)
+        public PeopleController(MasterDBContext context, IWebHostEnvironment appEnvironment)
         {
             _context = context;
+            _appEnvironment = appEnvironment;
         }
 
         ExcelExport exportPeople = new ExcelExport();
@@ -128,6 +135,8 @@ namespace WebERP.Controllers
             return View(person);
         }
 
+        
+
         // GET: People/Create
         public IActionResult Create()
         {
@@ -147,6 +156,7 @@ namespace WebERP.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(person);
         }
 
@@ -233,6 +243,54 @@ namespace WebERP.Controllers
         private bool PersonExists(int id)
         {
             return _context.People.Any(e => e.PersonId == id);
+        }
+        [HttpGet]
+        public IActionResult AddFile()
+        {
+            return View();
+        }
+        [HttpPost]
+
+        public async Task<IActionResult> AddFile(int id, string nameDoc, IFormFile upFile)
+        {
+            //TODO: Validation file
+            string name = nameDoc;
+            var extension = Path.GetExtension(upFile.FileName);
+
+            if (id == 0)
+            {
+                return NotFound();
+            }
+
+            if (upFile != null)
+            {
+                string path = "/images/employees/" + Convert.ToString(id) + "-" + DateTime.Now.ToString("dd-MM-yy_H-mm-ss") + extension;
+
+                using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+                {
+                    await upFile.CopyToAsync(fileStream);
+                }
+                File file = new File { Name = name, Path = path, PersonId = id, DateJoined = DateTime.UtcNow };
+                _context.Files.Add(file);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("EmployeeFiles",  new { id = 83});
+        }
+        public IActionResult EmployeeFiles(int? id)
+        {
+            if (id == null)
+            {
+                return View();
+            }
+
+
+            var filesList = _context.Files.Where(p => p.PersonId == id);
+            var fullname = _context.People.Where(p => p.PersonId == id)
+                .FirstOrDefault(m => m.PersonId == id);
+            ViewData["PersonId"] = id;
+            ViewData["Person"] = fullname.FullName;
+
+            return View(filesList);
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Http;
 
 namespace DBModels
 {
@@ -18,7 +20,9 @@ namespace DBModels
         public double? Phone { get; set; }
         public string Email { get; set; }
         public string RegionId { get; set; }
-
+        public string ImageUrl { get; set; }
         public virtual List<Worktime> Worktimes { get; set; }
+
+        public virtual List<File> Files { get; set; }
     }
 }

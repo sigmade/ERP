@@ -1,0 +1,16 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<form asp-action="AddFile" asp-controller="People" method="post" enctype="multipart/form-data">
+
+    <label class="form-check-label" for="exampleCheck1">Наименование документа</label>
+    <input type="text" name="nameDoc" class="form-control" />
+    <div class="form-group">
+        <label for="exampleFormControlFile1">Документ</label>
+        <input type="file" class="form-control-file" name="upFile">
+    </div>
+    <button type="submit" class="btn btn-primary mb-2">Загрузить</button>
+</form>
