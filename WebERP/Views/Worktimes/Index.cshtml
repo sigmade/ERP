@@ -16,19 +16,19 @@
     <thead>
         <tr>
             <th>
-                @*@Html.DisplayNameFor(model => model.Date)*@ Дата
+                Дата
             </th>
             <th>
-                @*@Html.DisplayNameFor(model => model.Hours)*@ Часы
+                Часы
             </th>
             <th>
-                @*@Html.DisplayNameFor(model => model.Local)*@ Объект
+                Объект
             </th>
             <th>
-                @*@Html.DisplayNameFor(model => model.Person)*@ Сотрудник
+                Сотрудник
             </th>
             <th>
-                @*@Html.DisplayNameFor(model => model.Position)*@ Позиция
+                Позиция
             </th>
             <th></th>
         </tr>
@@ -53,9 +53,9 @@
                     @Html.DisplayFor(modelItem => item.Position.PositionName)
                 </td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.WorktimeId">Details</a> |
-                    <a asp-action="Edit" asp-route-id="@item.WorktimeId">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@item.WorktimeId">Delete</a>
+                    <a asp-action="Details" asp-route-id="@item.WorktimeId">Подробно</a> |
+                    <a asp-action="Edit" asp-route-id="@item.WorktimeId">Редактировать</a> |
+                    <a asp-action="Delete" asp-route-id="@item.WorktimeId">Удалить</a>
                 </td>
             </tr>
         }

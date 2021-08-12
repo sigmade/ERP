@@ -19,23 +19,14 @@
             <div class="dropdown-menu">
                 <a class="dropdown-item" asp-action="Index" asp-route-sortOrder="@ViewData["IdSortParm"]">По ID</a>
                 <a class="dropdown-item" asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">По ФИО</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Separated link</a>
             </div>
         </li>
-        @*<li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li>*@
     </ul>
 <form asp-action="Index" method="get">
     <div class="input-group">
         <input type="text" class="form-control" placeholder="Введите имя сотрудника" aria-label="Recipient's username with two button addons" aria-describedby="button-addon4" name="SearchString" value="@ViewData["CurrentFilter"]" />
         <div class="input-group-append" id="button-addon4">
             <button class="btn btn-outline-secondary" type="submit">Поиск</button>
-            @*<button class="btn btn-outline-secondary"><a asp-action="Index" style="text-decoration: none;">Весь список</a></button>*@
             <a class="btn btn-outline-secondary" asp-action="Index" style="text-decoration: none;">Весь список</a>
         </div>
     </div>
@@ -47,19 +38,19 @@
                 ID
             </th>
             <th>
-                @*@Html.DisplayNameFor(model => model.FullName)*@ФИО
+                ФИО
             </th>
             <th>
-                @*@Html.DisplayNameFor(model => model.DateBirth)*@Дата рождения
+                Дата рождения
             </th>
             <th>
-                @*@Html.DisplayNameFor(model => model.Phone)*@Телефон
+                Телефон
             </th>
             <th>
-                @*@Html.DisplayNameFor(model => model.Email)*@Email
+                Email
             </th>
             <th>
-                @*@Html.DisplayNameFor(model => model.RegionId)*@Регион
+                Регион
             </th>
             <th>
             </th>
@@ -89,9 +80,9 @@
                 </td>
                 <td>
                     <a asp-action="Summary" asp-route-id="@item.PersonId">Сводка</a> |
-                    <a asp-action="Edit" asp-route-id="@item.PersonId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.PersonId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.PersonId">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.PersonId">Редактировать</a> |
+                    <a asp-action="Details" asp-route-id="@item.PersonId">Подробно</a> |
+                    <a asp-action="Delete" asp-route-id="@item.PersonId">Удалить</a>
                 </td>
             </tr>
         }
